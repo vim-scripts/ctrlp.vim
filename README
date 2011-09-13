@@ -6,7 +6,7 @@ Full path fuzzy file, buffer and MRU file finder.
     * Has full support for Vims regexp as search pattern, and more.
     * Can find file in most recently used files.
 
-    Screenshot: http://i.imgur.com/VBbt0.png
+    Screenshot: http://i.imgur.com/Gfntl.png
 
 BASIC USAGE
 
@@ -16,6 +16,7 @@ BASIC USAGE
     * Press <c-r> while CtrlP is open to switch to full regexp search mode.
     * End the input string with a colon `:` followed by a number to jump to that line in the selected file.  
         e.g. "abc:45" will open the file matched the pattern and jump to line 45.
+    * Submit two dots '..' as the input string to go backward the directory tree by 1 level.
 
 BASIC OPTIONS
 
@@ -45,6 +46,12 @@ BASIC OPTIONS
     * Enable/Disable Most Recently Used files monitoring and its functionalities:
 
         let g:ctrlp_mru_files = 1
+
+    * If you want to exclude directories or files from the search, you can use the Vims option wildignore.
+      e.g. Just have something like this in your vimrc:
+
+        set wildignore+=*/.git/*,*/.hg/*,*/.svn/*   " for Linux/MacOSX
+        set wildignore+=.git\*,.hg\*,.svn\*          " for Windows
 
 Run ":help ctrlp" for more mappings, commands and options.
 
