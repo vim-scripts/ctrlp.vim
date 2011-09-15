@@ -62,8 +62,7 @@ setting is from bottom to top: >
 
                                                    *'g:ctrlp_persistent_input'*
 Remember the last input string. Set this to 2 to also remember the last
-position of the selection in the match window and 0 to completely disable this
-feature: >
+position of the selection in the match window and 0 to disable this feature: >
   let g:ctrlp_persistent_input = 1
 <
 
@@ -84,7 +83,7 @@ Set this to 1 to ignore whitespaces in filenames and directory names: >
 
                                                   *'g:ctrlp_working_path_mode'*
                                                              *SetWorkingPath()*
-When starting up the prompt, automatically set the working directory (i.e. the
+When starting up the prompt, automatically sets the working directory (i.e. the
 |current-directory|) to:
   1 - the parent directory of the current file.
   2 - the nearest ancestor that contains one of these directories/files:
@@ -105,7 +104,7 @@ to your |.vimrc|; the parameter is the same (1, 2 and 0): >
 
                                                        *'g:ctrlp_root_markers'*
 Use this to set your own root markers for the |SetWorkingPath()| function, in
-addition to the default ones: >
+addition to the default ones, your markers will take precedence: >
   let g:ctrlp_root_markers = ['']
 <
 
@@ -194,14 +193,23 @@ Set this to 0 if you don’t want |CtrlP| to search for dotfiles and dotdirs: >
 <
 You can also use |'wildignore'| to exclude anything from the search.
 e.g. exclude version control directories from the results: >
-  set wildignore+=.git/*,.hg/*,.svn/*  " Linux/MacOSX
-  set wildignore+=.git\*,.hg\*,.svn\*  " Windows
+  set wildignore+=*/.git/*,*/.hg/*,*/.svn/*  " Linux/MacOSX
+  set wildignore+=.git\*,.hg\*,.svn\*        " Windows
 <
+Note: the `*/` in front of each dotfile glob is required for the dotfiles
+search feature to work correctly along side with |wildignore|. If you’ve
+disabled dotfiles search (set |g:ctrlp_dotfiles| to 0), then you can ignore
+this.
 
                                                     *'g:ctrlp_highlight_match'*
 Use this to enable/disable highlighting of the matched patterns and to specify
 the highlight group that’ll be used: >
   let g:ctrlp_highlight_match = [1, 'Function']
+<
+
+                                                          *'g:ctrlp_max_files'*
+The maximum number of files to scan, set to 0 for no limit: >
+  let g:ctrlp_max_files = 20000
 <
 
                                                        *'g:ctrlp_user_command'*
@@ -239,17 +247,17 @@ Examples: >
 
                                                              *:ClearCtrlPCache*
 :ClearCtrlPCache
-   Flush the cache for the current working directory.
+   Flush the cache for the current working directory. Same as pressing <F5>.
 
                                                          *:ClearAllCtrlPCaches*
 :ClearAllCtrlPCaches
-   Delete all the saved cache files in |ctrlp_cache_dir|.
+   Delete all the cache files saved in |ctrlp_cache_dir|.
 
 The following commands ignore the value of |g:ctrlp_working_path_mode|:
 
                                                                   *:CtrlPCurWD*
 :CtrlPCurWD
-   Find files in the |current-directory|.
+   Find files in the |current-directory| (without changing it).
 
                                                                 *:CtrlPCurFile*
 :CtrlPCurFile
@@ -343,17 +351,17 @@ Once inside the prompt:
   <esc>,
   <c-c>,
   <c-g>
-    Exit |CtrlP|
+    Exit |CtrlP|.
 
 Chose your own mappings with |g:ctrlp_prompt_mappings|.
 
-When inside the match window (press <tab> to switch to):
+When inside the match window (press <tab> to switch):
 
   a-z
   0-9
   ~^-=;`',.+!@#$%&_(){}[]
-    Cycle through the lines with the first letter (paths or filenames) that
-    match that character.
+    Cycle through the lines with the first letter (of paths or filenames) that
+    matches that key.
 
 ===============================================================================
 5. Input Formats                                          *ctrlp-input-formats*
@@ -361,7 +369,7 @@ When inside the match window (press <tab> to switch to):
                                                    *ctrlp-prompt-input-formats*
 Formats for inputting in the prompt:
 
-a)  Simple string. e.g. 'abc' is understood internally as 'a.\{-}b.\{-}c'
+a)  Simple string. e.g. 'abc' is understood internally as 'a[^a]\{-}b[^b]\{-}c'
 
 b)  Vim |regexp|. If the input string contains '*' or '|', it’ll be treated as
     a Vim’s |regexp| |pattern| without any modification.
@@ -395,6 +403,8 @@ Mercurial repository: https://bitbucket.org/kien/ctrlp.vim
 
 ===============================================================================
 CHANGELOG
+
+    + New option: |g:ctrlp_max_files|
 
 Before 2011/09/12
 
