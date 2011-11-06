@@ -1,9 +1,9 @@
 This is a mirror of http://www.vim.org/scripts/script.php?script_id=3736
 
-Full path fuzzy file, buffer and MRU file finder.
+Fuzzy file, buffer and MRU file finder with regexp support.
 
     * Written in pure Vimscript for MacVim and Vim 7.0+.
-    * Has full support for Vims regexp as search pattern.
+    * Full support for Vims regexp as search pattern.
     * Built-in Most Recently Used (MRU) files monitoring.
     * Built-in project's root finder.
 
